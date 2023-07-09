@@ -1,0 +1,23 @@
+.profile {
+  margin-bottom: 51px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(min-content, max-content));
+  grid-template-areas:
+  "avatar info edit-button add-button";
+}
+
+@media screen and (min-width: 631px) and (max-width: 930px) {
+  .profile {
+    margin-left: 27px;
+    margin-right: 27px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 630px) {
+  .profile {
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 36px;
+    display: block;
+  }
+}

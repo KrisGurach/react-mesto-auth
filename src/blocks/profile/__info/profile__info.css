@@ -1,0 +1,25 @@
+.profile__info {
+  grid-area: info;
+  margin-right: 18px;
+  padding-top: 12px;
+  color: var(--white-color);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media screen and (min-width: 631px) and (max-width: 756px){
+  .profile__info {
+    margin-right: 10px;
+    max-width: 220px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 630px){
+  .profile__info {
+    display: block;
+    margin: 0 calc((100% - 190px)/2);
+    padding: 0;
+    max-width: 190px;
+  }
+}
