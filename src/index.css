@@ -51,3 +51,6 @@
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__text/footer__text.css);
 
+@import url(./blocks/signIn/signIn.css);
+@import url(./blocks/signUp/signUp.css);
+

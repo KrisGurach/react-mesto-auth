@@ -8,8 +8,13 @@ import ImagePopup from './ImagePopup/ImagePopup.jsx';
 import PopupWithForm from '../components/PopupWithForm/PopupWithForm.jsx';
 import EditProfilePopup from './EditProfilePopup/EditProfilePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx';
-import { useState, useEffect } from 'react';
 import AddPlacePopup from './AddPlacePopup/AddPlacePopup.jsx';
+import { useState, useEffect } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import Login from './Login/Login.jsx';
+import Register from './Register/Register.jsx';
+import ProtectedRouteElement from './ProtectedRoute/ProtectedRoute.js';
 
 function App() {
   //стейты для получения информации с сервера
@@ -24,14 +29,18 @@ function App() {
   const [isImagePopup, setIsImagePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [loggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
-    api.getWebInfo()
+    api
+      .getWebInfo()
       .then((info) => setCurrentUser(info))
       .catch(console.error);
   }, []);
 
   useEffect(() => {
-    api.getCards()
+    api
+      .getCards()
       .then((webCards) => setCards(webCards))
       .catch(console.error);
   }, []);
@@ -65,7 +74,8 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     function makeRequest() {
-      return api.toggleLikeCard(card._id, !isLiked)
+      return api
+        .toggleLikeCard(card._id, !isLiked)
         .then((newCard) =>
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -77,7 +87,8 @@ function App() {
 
   function handleCardDelete(id) {
     function makeRequest() {
-      return api.removeCard(id)
+      return api
+        .removeCard(id)
         .then(() =>
           setCards((state) => state.filter((card) => card._id !== id))
         );
@@ -88,17 +99,18 @@ function App() {
 
   function handleUpdateUser(userNewInfo) {
     function makeRequest() {
-      return api.updateProfileData(userNewInfo)
+      return api
+        .updateProfileData(userNewInfo)
         .then((userData) => setCurrentUser(userData));
     }
 
     handleSubmit(makeRequest);
   }
-  
 
   function handleUpdateAvatar(avatar) {
     function makeRequest() {
-      return api.sendAvatar(avatar)
+      return api
+        .sendAvatar(avatar)
         .then((userData) => setCurrentUser(userData));
     }
 
@@ -107,8 +119,9 @@ function App() {
 
   function handleAddPlaceSubmit({ place, link }) {
     function makeRequest() {
-      return  api.sendNewCard({ place, link })
-        .then((newCard) => setCards([newCard, ...cards]))
+      return api
+        .sendNewCard({ place, link })
+        .then((newCard) => setCards([newCard, ...cards]));
     }
 
     handleSubmit(makeRequest);
@@ -122,56 +135,69 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
+  // const handleLogin = () => {
+  //   setLoggedIn(true);
+  // }
 
   return (
-    <AppContext.Provider value={{ isLoading, onClose: closeAllPopups }}>
-      <CurrentUserContext.Provider value={currentUser}>
-        <div className="container">
-          <Header />
+    <BrowserRouter>
+      <AppContext.Provider value={{ isLoading, onClose: closeAllPopups }}>
+        <CurrentUserContext.Provider value={currentUser}>
+          <div className="container">
+            <Header />
 
-          <Main
-            cards={cards}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          />
+            <Routes>
+              <Route path="/sign-in" element={<Login />} />
+              <Route path="/sign-up" element={<Register />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRouteElement
+                    element={Main}
+                    cards={cards}
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onEditAvatar={handleEditAvatarClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleCardDelete}
+                    loggedIn={loggedIn}
+                  />
+                }
+              />
+            </Routes>
 
-          <ImagePopup />
+            <ImagePopup />
 
-          <EditProfilePopup
-            isOpen={isEditProfilePopupOpen}
-            onUpdateUser={handleUpdateUser}
-          />
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onUpdateUser={handleUpdateUser}
+            />
 
-          <AddPlacePopup
-            isOpened={isAddPlacePopupOpen}
-            onAddPlace={handleAddPlaceSubmit}
-          />
+            <AddPlacePopup
+              isOpened={isAddPlacePopupOpen}
+              onAddPlace={handleAddPlaceSubmit}
+            />
 
-          <EditAvatarPopup
-            isOpened={isEditAvatarPopupOpen}
-            onUpdateAvatar={handleUpdateAvatar}
-          />
+            <EditAvatarPopup
+              isOpened={isEditAvatarPopupOpen}
+              onUpdateAvatar={handleUpdateAvatar}
+            />
 
-          <PopupWithForm
-            name="remove-photo"
-            title="Вы уверены?"
-            ariaLabel="Окно подтверждения удаления фото"
-            titleButton="Да"
-          ></PopupWithForm>
+            <PopupWithForm
+              name="remove-photo"
+              title="Вы уверены?"
+              ariaLabel="Окно подтверждения удаления фото"
+              titleButton="Да"
+            ></PopupWithForm>
 
-          <ImagePopup
-            card={selectedCard}
-            isOpened={isImagePopup}
-          />
+            <ImagePopup card={selectedCard} isOpened={isImagePopup} />
 
-          <Footer />
-        </div>
-      </CurrentUserContext.Provider>
-    </AppContext.Provider>
+            <Footer />
+          </div>
+        </CurrentUserContext.Provider>
+      </AppContext.Provider>
+    </BrowserRouter>
   );
 }
 
