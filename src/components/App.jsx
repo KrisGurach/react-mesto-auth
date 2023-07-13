@@ -1,4 +1,5 @@
 import api from '../utils/api.js';
+import auth from '../utils/auth.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 import { AppContext } from '../contexts/AppContext.js';
 import Header from '../components/Header/Header.jsx';
@@ -10,13 +11,15 @@ import EditProfilePopup from './EditProfilePopup/EditProfilePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup/EditAvatarPopup.jsx';
 import AddPlacePopup from './AddPlacePopup/AddPlacePopup.jsx';
 import { useState, useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useNavigate } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
 import Login from './Login/Login.jsx';
 import Register from './Register/Register.jsx';
 import ProtectedRouteElement from './ProtectedRoute/ProtectedRoute.js';
 
 function App() {
+  const navigate = useNavigate();
+
   //стейты для получения информации с сервера
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
@@ -44,6 +47,10 @@ function App() {
       .then((webCards) => setCards(webCards))
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    handleTokenCheck();
+  }, [])
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -135,9 +142,21 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
-  // const handleLogin = () => {
-  //   setLoggedIn(true);
-  // }
+  const handleLogin = () => {
+    setLoggedIn(true);
+  }
+
+  const handleTokenCheck = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      auth.checkToken(token).then((res) => {
+        if (res) {
+          setLoggedIn(true);
+          navigate("/", {replace: true})
+        }
+      })
+    }  
+  }
 
   return (
     <BrowserRouter>
@@ -147,7 +166,7 @@ function App() {
             <Header />
 
             <Routes>
-              <Route path="/sign-in" element={<Login />} />
+              <Route path="/sign-in" element={<Login handleLogin={handleLogin} />} />
               <Route path="/sign-up" element={<Register />} />
               <Route
                 path="/"

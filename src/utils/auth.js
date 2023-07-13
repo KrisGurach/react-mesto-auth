@@ -4,7 +4,7 @@ class Authorization {
   }
 
   _request(endPoint, options) {
-    return fetch(this._url + endPoint, options).then(this._getResponseData);
+    return fetch(this._baseUrl + endPoint, options).then(this._getResponseData);
   }
 
   _getResponseData = (res) => {
@@ -15,12 +15,40 @@ class Authorization {
     return this._request("/signup", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify ({
+      body: JSON.stringify({
         password: values.password,
-        email: values.email
-      })
+        email: values.email,
+      }),
+    });
+  };
+
+  signIn = (email, password) => {
+    return this._request("/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password: password,
+        email: email,
+      }),
+    }).then((data) => {
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        return data;
+      }
+    });
+  };
+
+  checkToken = (token) => {
+    return this._request("/users/me", {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${token}`
+      }
     })
   }
 }

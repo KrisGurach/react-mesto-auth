@@ -1,11 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
+import auth from "../../utils/auth";
 
 export default function Register() {
-  function handleClick() {
-    
-  }
-
+  const navigate = useNavigate();
   const { values, handleChange } = useForm();
+
+  function handleClick(e) {
+    e.preventDefault();
+    auth.signUp(values)
+      .then(() => navigate('/sign-in', {replace: true}))
+      .catch(console.error);
+  }
 
   return (
     <div className="signUp">
