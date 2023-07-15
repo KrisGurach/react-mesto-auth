@@ -1,3 +1,14 @@
 .header__out {
-    color: var(--light-grey-color);
+  align-self: center;
+  color: var(--light-grey-color);
+  background-color: var(--black-opacity-00-color);
+  padding: 0;
+  min-width: 53px;
+  height: 22px;
+  border: none;
+  cursor: pointer;
+  font-family: "Inter";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.22;
 }

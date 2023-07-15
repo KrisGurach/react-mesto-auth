@@ -2,7 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
 
-export default function Login({ handleLogin }) {
+export default function Login({ handleEmail, handleLogin, handleHeaderStateChange }) {
   const navigate = useNavigate();
   const { values, handleChange, setValues } = useForm();
 
@@ -16,13 +16,16 @@ export default function Login({ handleLogin }) {
       .signIn(values.email, values.password)
       .then((data) => {
         if (data.token) {
-          setValues({ username: "", password: "" });
+          handleEmail(values.email);
+          setValues({ email: "", password: "" });
           handleLogin();
           navigate("/", { replace: true });
         }
       })
       .catch(console.error);
   }
+
+  handleHeaderStateChange('signIn');
 
   return (
     <div className="signIn">

@@ -34,6 +34,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
+  const [headerState, setHeaderState] = useState("");
 
   useEffect(() => {
     api
@@ -160,18 +161,37 @@ function App() {
     }
   };
 
+  function handleHeaderStateChange(state) {
+    setHeaderState(state);
+  }
+
+  function handleEmail(email) {
+    setEmail(email);
+  }
+
   return (
     <AppContext.Provider value={{ isLoading, onClose: closeAllPopups }}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="container">
-          <Header email={email} />
+          <Header email={email} headerState={headerState} />
 
           <Routes>
             <Route
               path="/sign-in"
-              element={<Login handleLogin={handleLogin} />}
+              element={
+                <Login
+                  handleEmail={handleEmail}
+                  handleLogin={handleLogin}
+                  handleHeaderStateChange={handleHeaderStateChange}
+                />
+              }
             />
-            <Route path="/sign-up" element={<Register />} />
+            <Route
+              path="/sign-up"
+              element={
+                <Register handleHeaderStateChange={handleHeaderStateChange} />
+              }
+            />
             <Route
               path="/"
               element={
@@ -185,6 +205,7 @@ function App() {
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}
                   loggedIn={loggedIn}
+                  handleHeaderStateChange={handleHeaderStateChange}
                 />
               }
             />

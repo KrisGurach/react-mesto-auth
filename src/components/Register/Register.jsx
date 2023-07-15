@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
 
-export default function Register() {
+export default function Register({handleHeaderStateChange}) {
   const navigate = useNavigate();
   const { values, handleChange } = useForm();
 
@@ -12,6 +12,8 @@ export default function Register() {
       .then(() => navigate('/sign-in', {replace: true}))
       .catch(console.error);
   }
+
+  handleHeaderStateChange('signUp');
 
   return (
     <div className="signUp">
