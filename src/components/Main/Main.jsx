@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../Card/Card.jsx";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
@@ -10,8 +10,13 @@ export default function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
+  handleCurrentPageChange,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
+
+  useEffect(() => {
+    handleCurrentPageChange("main");
+  }, []);
 
   return (
     <main>

@@ -1,5 +1,7 @@
 .popup__container_min-size {
   width: 430px;
+  background-color: var(--white-color);
+  border-radius: 10px;
 }
 
 @media screen and (min-width: 320px) and (max-width: 676px) {

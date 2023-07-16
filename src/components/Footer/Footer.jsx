@@ -1,7 +1,9 @@
-export default function Footer() {
+export default function Footer({ currentPage }) {
   return (
     <footer className="footer">
-      <p className="footer__text">© 2023 Mesto Russia</p>
+      {currentPage === "main" && (
+        <p className="footer__text">© 2023 Mesto Russia</p>
+      )}
     </footer>
   );
 }
