@@ -5,6 +5,9 @@ import { useEffect } from "react";
 export default function Header({email, headerState}) {
   const navigate = useNavigate();
 
+  const buttonClassName = `header__button ${headerState === "main" && "header__button_grey"}`;
+
+
   let message = '';
   let handleClick;
 
@@ -50,8 +53,9 @@ export default function Header({email, headerState}) {
       <img src={logo} className="logo" alt="логотип Место" />
       <div className="header__container">
         {headerState === "main" && <p className="header__email">{email}</p>}
-        <button className="header__out" onClick={handleClick}>{message}</button>
+        <button className={buttonClassName} onClick={handleClick}>{message}</button>
       </div>
     </header>
   );
 }
+

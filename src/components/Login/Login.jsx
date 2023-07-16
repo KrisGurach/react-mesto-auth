@@ -1,6 +1,7 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
+import { useEffect } from "react";
 
 export default function Login({ handleEmail, handleLogin, handleHeaderStateChange }) {
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ export default function Login({ handleEmail, handleLogin, handleHeaderStateChang
       .catch(console.error);
   }
 
-  handleHeaderStateChange('signIn');
+  useEffect(() => {
+    handleHeaderStateChange("signIn");
+  }, []);
 
   return (
     <div className="signIn">
@@ -34,7 +37,7 @@ export default function Login({ handleEmail, handleLogin, handleHeaderStateChang
         type="text"
         name="email"
         placeholder="Email"
-        className="popup__input popup__input_type_name"
+        className="signIn__input signIn__input_type_email"
         minLength={2}
         maxLength={40}
         required=""
@@ -45,16 +48,14 @@ export default function Login({ handleEmail, handleLogin, handleHeaderStateChang
         type="text"
         name="password"
         placeholder="Пароль"
-        className="popup__input popup__input_type_profession"
+        className="signIn__input signIn__input_type_password"
         minLength={2}
         maxLength={400}
         required=""
         value={values.password || ""}
         onChange={handleChange}
       />
-      <button onClick={handleClick}>Войти</button>
-
-      <Link to="/sign-up" className="signup__link">Зарегистрироваться</Link>
+      <button className="signIn__button" onClick={handleClick}>Войти</button>
     </div>
   );
 }

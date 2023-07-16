@@ -157,7 +157,8 @@ function App() {
           setLoggedIn(true);
           navigate("/", { replace: true });
         }
-      });
+      })
+      .catch(console.error);
     }
   };
 
@@ -238,7 +239,7 @@ function App() {
 
           <ImagePopup card={selectedCard} isOpened={isImagePopup} />
 
-          <Footer />
+          <Footer headerState={headerState}/>
         </div>
       </CurrentUserContext.Provider>
     </AppContext.Provider>

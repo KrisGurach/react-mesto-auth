@@ -1,7 +1,7 @@
-export default function Footer() {
+export default function Footer({headerState}) {
   return (
     <footer className="footer">
-      <p className="footer__text">© 2023 Mesto Russia</p>
+      {headerState === "main" && <p className="footer__text">© 2023 Mesto Russia</p>}
     </footer>
   );
 }
