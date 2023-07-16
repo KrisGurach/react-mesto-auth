@@ -1,35 +1,35 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logo from "../../images/logotype.svg";
-import { useEffect } from "react";
 
-export default function Header({ email, currentPage }) {
+export default function Header({ email }) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const buttonClassName = `header__button ${
-    currentPage === "main" && "header__button_grey"
+    pathname === "/" && "header__button_grey"
   }`;
 
   let message = "";
   let handleClick;
 
-  switch (currentPage) {
-    case "signIn":
+  switch (pathname) {
+    case "/sign-in":
       message = "Регистрация";
       handleClick = toSignUp;
       break;
 
-    case "signUp":
+    case "/sign-up":
       message = "Войти";
       handleClick = toSignIn;
       break;
 
-    case "main":
+    case "/":
       message = "Выйти";
       handleClick = signOut;
       break;
 
     default:
-      message = currentPage;
+      message = "";
   }
 
   function signOut() {
@@ -49,7 +49,7 @@ export default function Header({ email, currentPage }) {
     <header className="header">
       <img src={logo} className="logo" alt="логотип Место" />
       <div className="header__container">
-        {currentPage === "main" && <p className="header__email">{email}</p>}
+        {pathname === "/" && <p className="header__email">{email}</p>}
         <button className={buttonClassName} onClick={handleClick}>
           {message}
         </button>

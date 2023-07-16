@@ -46,7 +46,7 @@ export default function EditProfilePopup({ isOpen, onUpdateUser }) {
         placeholder="Введите профессию"
         className="popup__input popup__input_type_profession"
         minLength={2}
-        maxLength={400}
+        maxLength={200}
         required=""
         value={values.about || ""}
         onChange={handleChange}

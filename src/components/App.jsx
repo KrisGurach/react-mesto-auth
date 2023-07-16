@@ -35,7 +35,6 @@ function App() {
   const [isLoginPopupOpened, setLoginPopupOpened] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [currentPage, setCurrentPage] = useState("");
 
   useEffect(() => {
     api
@@ -168,10 +167,6 @@ function App() {
     }
   };
 
-  function handleCurrentPageChange(state) {
-    setCurrentPage(state);
-  }
-
   function handleEmail(email) {
     setEmail(email);
   }
@@ -180,7 +175,7 @@ function App() {
     <AppContext.Provider value={{ isLoading, onClose: closeAllPopups }}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="container">
-          <Header email={email} currentPage={currentPage} />
+          <Header email={email} />
 
           <Routes>
             <Route
@@ -189,7 +184,6 @@ function App() {
                 <Login
                   handleEmail={handleEmail}
                   handleLogin={handleLogin}
-                  handleCurrentPageChange={handleCurrentPageChange}
                 />
               }
             />
@@ -197,7 +191,6 @@ function App() {
               path="/sign-up"
               element={
                 <Register 
-                handleCurrentPageChange={handleCurrentPageChange} 
                 isOpened={isLoginPopupOpened}
                 handleLoginPopupOpened={handleLoginPopupOpened}
                 />
@@ -216,7 +209,6 @@ function App() {
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}
                   loggedIn={loggedIn}
-                  handleCurrentPageChange={handleCurrentPageChange}
                 />
               }
             />
@@ -249,7 +241,7 @@ function App() {
 
           <ImagePopup card={selectedCard} isOpened={isImagePopup} />
 
-          <Footer currentPage={currentPage}/>
+          <Footer />
         </div>
       </CurrentUserContext.Provider>
     </AppContext.Provider>

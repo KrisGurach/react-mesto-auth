@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 export default function Register({
-  handleCurrentPageChange,
   isOpened,
   handleLoginPopupOpened,
 }) {
   const { values, handleChange } = useForm();
   const [isSuccess, setIsSuccess] = useState(false);
 
-  function handleClick(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     auth
       .signUp(values)
@@ -23,38 +22,34 @@ export default function Register({
       });
   }
 
-  useEffect(() => {
-    handleCurrentPageChange("signUp");
-  }, []);
-
   return (
     <div className="signIn">
       <p className="signIn__text">Регистрация</p>
-      <input
-        type="text"
-        name="email"
-        placeholder="Email"
-        className="signIn__input signIn__input_type_email"
-        minLength={2}
-        maxLength={40}
-        required=""
-        value={values.email || ""}
-        onChange={handleChange}
-      />
-      <input
-        type="text"
-        name="password"
-        placeholder="Пароль"
-        className="signIn__input signIn__input_type_password"
-        minLength={2}
-        maxLength={400}
-        required=""
-        value={values.password || ""}
-        onChange={handleChange}
-      />
-      <button className="signIn__button" onClick={handleClick}>
-        Зарегистрироваться
-      </button>
+      <form className="popup__form" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          className="signIn__input signIn__input_type_email"
+          minLength={2}
+          maxLength={40}
+          required=""
+          value={values.email || ""}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="password"
+          placeholder="Пароль"
+          className="signIn__input signIn__input_type_password"
+          minLength={2}
+          maxLength={400}
+          required=""
+          value={values.password || ""}
+          onChange={handleChange}
+        />
+        <button className="signIn__button">Зарегистрироваться</button>
+      </form>
 
       <Link to="/sign-in" className="signIn__link">
         Уже зарегистрированы? Войти

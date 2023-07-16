@@ -1,7 +1,11 @@
-export default function Footer({ currentPage }) {
+import { useLocation } from "react-router";
+
+export default function Footer() {
+  const { pathname } = useLocation();
+
   return (
     <footer className="footer">
-      {currentPage === "main" && (
+      {pathname === "/" && (
         <p className="footer__text">© 2023 Mesto Russia</p>
       )}
     </footer>
