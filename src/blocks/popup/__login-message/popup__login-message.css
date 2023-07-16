@@ -1,0 +1,11 @@
+.popup__login-message {
+  width: 358px;
+  min-height: 58px;  
+  margin: 0 0 60px 0;
+  color: var(--black-color);  
+  font-family: "Inter";
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: center;
+}

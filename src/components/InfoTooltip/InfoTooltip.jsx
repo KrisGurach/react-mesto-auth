@@ -33,8 +33,10 @@ export default function InfoTooltip({ isOpened, isSuccess }) {
           type="button"
           onClick={handleClose}
         />
-        <img src={logo} alt="" className="popup__icon"></img>
-        <p className="popup__login-message">{message}</p>
+        <div className="popup__wrapper">
+          <img src={logo} alt="" className="popup__icon"></img>
+          <p className="popup__login-message">{message}</p>
+        </div>
       </div>
     </div>
   );

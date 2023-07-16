@@ -51,6 +51,9 @@
 @import url(./blocks/popup/__figure/popup__figure.css);
 @import url(./blocks/popup/__error/popup__error.css);
 @import url(./blocks/popup/__error/_visible/popup__error_visible.css);
+@import url(./blocks/popup/__wrapper/popup__wrapper.css);
+@import url(./blocks/popup/__login-message/popup__login-message.css);
+@import url(./blocks/popup/__icon/popup__icon.css);
 
 @import url(./blocks/signIn/signIn.css);
 @import url(./blocks/signIn/__text/signIn__text.css);
