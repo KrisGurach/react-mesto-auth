@@ -1,17 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
-export default function Register({handleHeaderStateChange}) {
-  const navigate = useNavigate();
+export default function Register({handleHeaderStateChange, isOpened, handleLoginPopupOpened }) {
   const { values, handleChange } = useForm();
+  const [isSuccess, setIsSuccess] = useState(false);
 
   function handleClick(e) {
     e.preventDefault();
     auth.signUp(values)
-      .then(() => navigate('/sign-in', {replace: true}))
-      .catch(console.error);
+      .then(() => setIsSuccess(true))
+      .catch(console.error)
+      .finally(() => {
+        handleLoginPopupOpened();
+      })
   }
 
   useEffect(() => {
@@ -46,6 +50,8 @@ export default function Register({handleHeaderStateChange}) {
       <button className="signIn__button" onClick={handleClick}>Зарегистрироваться</button>
 
       <Link to="/sign-in" className="signIn__link">Уже зарегистрированы? Войти</Link>
+
+      <InfoTooltip isOpened={isOpened} isSuccess={isSuccess} />
     </div>
   );
 }

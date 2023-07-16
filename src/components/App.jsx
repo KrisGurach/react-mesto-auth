@@ -32,6 +32,7 @@ function App() {
   const [selectedCard, setIsSelectedCardOpen] = useState({});
   const [isImagePopup, setIsImagePopupOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoginPopupOpened, setLoginPopupOpened] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [headerState, setHeaderState] = useState("");
@@ -60,6 +61,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsSelectedCardOpen({});
     setIsImagePopupOpen(false);
+    setLoginPopupOpened(false);
   }
 
   function handleEditProfileClick() {
@@ -148,6 +150,10 @@ function App() {
     setLoggedIn(true);
   };
 
+  const handleLoginPopupOpened = () => {
+    setLoginPopupOpened(true);
+  }
+
   const handleTokenCheck = () => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -190,7 +196,11 @@ function App() {
             <Route
               path="/sign-up"
               element={
-                <Register handleHeaderStateChange={handleHeaderStateChange} />
+                <Register 
+                handleHeaderStateChange={handleHeaderStateChange} 
+                isOpened={isLoginPopupOpened}
+                handleLoginPopupOpened={handleLoginPopupOpened}
+                />
               }
             />
             <Route

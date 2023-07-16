@@ -3,7 +3,7 @@ import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
 import { useEffect } from "react";
 
-export default function Login({ handleEmail, handleLogin, handleHeaderStateChange }) {
+export default function Login({ handleEmail, handleLogin, handleHeaderStateChange}) {
   const navigate = useNavigate();
   const { values, handleChange, setValues } = useForm();
 

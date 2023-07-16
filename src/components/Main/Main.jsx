@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "../Card/Card.jsx";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
@@ -14,7 +14,9 @@ export default function Main({
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
-  handleHeaderStateChange('main');
+  useEffect(() => {
+    handleHeaderStateChange("main");
+  }, []);
 
   return (
     <main>
