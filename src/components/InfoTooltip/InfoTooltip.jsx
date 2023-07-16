@@ -25,7 +25,6 @@ export default function InfoTooltip({ isOpened, isSuccess }) {
   return (
     <div
       className={`popup popup_type_login ${isOpened && "popup_opened"}`}
-      // aria-label={ariaLabel}
     >
       <div className="popup__container popup__container_min-size">
         <button

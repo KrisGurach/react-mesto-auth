@@ -35,7 +35,7 @@ function App() {
   const [isLoginPopupOpened, setLoginPopupOpened] = useState(false);
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [headerState, setHeaderState] = useState("");
+  const [currentPage, setCurrentPage] = useState("");
 
   useEffect(() => {
     api
@@ -168,8 +168,8 @@ function App() {
     }
   };
 
-  function handleHeaderStateChange(state) {
-    setHeaderState(state);
+  function handleCurrentPageChange(state) {
+    setCurrentPage(state);
   }
 
   function handleEmail(email) {
@@ -180,7 +180,7 @@ function App() {
     <AppContext.Provider value={{ isLoading, onClose: closeAllPopups }}>
       <CurrentUserContext.Provider value={currentUser}>
         <div className="container">
-          <Header email={email} headerState={headerState} />
+          <Header email={email} currentPage={currentPage} />
 
           <Routes>
             <Route
@@ -189,7 +189,7 @@ function App() {
                 <Login
                   handleEmail={handleEmail}
                   handleLogin={handleLogin}
-                  handleHeaderStateChange={handleHeaderStateChange}
+                  handleCurrentPageChange={handleCurrentPageChange}
                 />
               }
             />
@@ -197,7 +197,7 @@ function App() {
               path="/sign-up"
               element={
                 <Register 
-                handleHeaderStateChange={handleHeaderStateChange} 
+                handleCurrentPageChange={handleCurrentPageChange} 
                 isOpened={isLoginPopupOpened}
                 handleLoginPopupOpened={handleLoginPopupOpened}
                 />
@@ -216,7 +216,7 @@ function App() {
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}
                   loggedIn={loggedIn}
-                  handleHeaderStateChange={handleHeaderStateChange}
+                  handleCurrentPageChange={handleCurrentPageChange}
                 />
               }
             />
@@ -249,7 +249,7 @@ function App() {
 
           <ImagePopup card={selectedCard} isOpened={isImagePopup} />
 
-          <Footer headerState={headerState}/>
+          <Footer currentPage={currentPage}/>
         </div>
       </CurrentUserContext.Provider>
     </AppContext.Provider>

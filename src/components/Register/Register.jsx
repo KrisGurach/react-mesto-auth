@@ -4,22 +4,27 @@ import auth from "../../utils/auth";
 import { useEffect, useState } from "react";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
-export default function Register({handleHeaderStateChange, isOpened, handleLoginPopupOpened }) {
+export default function Register({
+  handleCurrentPageChange,
+  isOpened,
+  handleLoginPopupOpened,
+}) {
   const { values, handleChange } = useForm();
   const [isSuccess, setIsSuccess] = useState(false);
 
   function handleClick(e) {
     e.preventDefault();
-    auth.signUp(values)
+    auth
+      .signUp(values)
       .then(() => setIsSuccess(true))
       .catch(console.error)
       .finally(() => {
         handleLoginPopupOpened();
-      })
+      });
   }
 
   useEffect(() => {
-    handleHeaderStateChange("signUp");
+    handleCurrentPageChange("signUp");
   }, []);
 
   return (
@@ -47,9 +52,13 @@ export default function Register({handleHeaderStateChange, isOpened, handleLogin
         value={values.password || ""}
         onChange={handleChange}
       />
-      <button className="signIn__button" onClick={handleClick}>Зарегистрироваться</button>
+      <button className="signIn__button" onClick={handleClick}>
+        Зарегистрироваться
+      </button>
 
-      <Link to="/sign-in" className="signIn__link">Уже зарегистрированы? Войти</Link>
+      <Link to="/sign-in" className="signIn__link">
+        Уже зарегистрированы? Войти
+      </Link>
 
       <InfoTooltip isOpened={isOpened} isSuccess={isSuccess} />
     </div>

@@ -10,12 +10,12 @@ export default function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
-  handleHeaderStateChange
+  handleCurrentPageChange,
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   useEffect(() => {
-    handleHeaderStateChange("main");
+    handleCurrentPageChange("main");
   }, []);
 
   return (

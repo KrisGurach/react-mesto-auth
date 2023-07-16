@@ -2,16 +2,17 @@ import { useNavigate } from "react-router-dom";
 import logo from "../../images/logotype.svg";
 import { useEffect } from "react";
 
-export default function Header({email, headerState}) {
+export default function Header({ email, currentPage }) {
   const navigate = useNavigate();
 
-  const buttonClassName = `header__button ${headerState === "main" && "header__button_grey"}`;
+  const buttonClassName = `header__button ${
+    currentPage === "main" && "header__button_grey"
+  }`;
 
-
-  let message = '';
+  let message = "";
   let handleClick;
 
-  switch (headerState) {
+  switch (currentPage) {
     case "signIn":
       message = "Регистрация";
       handleClick = toSignUp;
@@ -28,7 +29,7 @@ export default function Header({email, headerState}) {
       break;
 
     default:
-      message = headerState;
+      message = currentPage;
   }
 
   function signOut() {
@@ -37,25 +38,22 @@ export default function Header({email, headerState}) {
   }
 
   function toSignIn() {
-    navigate("/sign-in", {replace: true});
+    navigate("/sign-in", { replace: true });
   }
 
   function toSignUp() {
-    navigate("/sign-up", {replace: true});
+    navigate("/sign-up", { replace: true });
   }
-
-  useEffect(() => {
-    
-  }, [email])
 
   return (
     <header className="header">
       <img src={logo} className="logo" alt="логотип Место" />
       <div className="header__container">
-        {headerState === "main" && <p className="header__email">{email}</p>}
-        <button className={buttonClassName} onClick={handleClick}>{message}</button>
+        {currentPage === "main" && <p className="header__email">{email}</p>}
+        <button className={buttonClassName} onClick={handleClick}>
+          {message}
+        </button>
       </div>
     </header>
   );
 }
-

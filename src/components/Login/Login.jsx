@@ -3,7 +3,11 @@ import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
 import { useEffect } from "react";
 
-export default function Login({ handleEmail, handleLogin, handleHeaderStateChange}) {
+export default function Login({
+  handleEmail,
+  handleLogin,
+  handleCurrentPageChange,
+}) {
   const navigate = useNavigate();
   const { values, handleChange, setValues } = useForm();
 
@@ -27,7 +31,7 @@ export default function Login({ handleEmail, handleLogin, handleHeaderStateChang
   }
 
   useEffect(() => {
-    handleHeaderStateChange("signIn");
+    handleCurrentPageChange("signIn");
   }, []);
 
   return (
@@ -55,7 +59,9 @@ export default function Login({ handleEmail, handleLogin, handleHeaderStateChang
         value={values.password || ""}
         onChange={handleChange}
       />
-      <button className="signIn__button" onClick={handleClick}>Войти</button>
+      <button className="signIn__button" onClick={handleClick}>
+        Войти
+      </button>
     </div>
   );
 }
