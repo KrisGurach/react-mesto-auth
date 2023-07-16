@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
-import { useEffect } from "react";
 
 export default function Login({
   handleEmail,

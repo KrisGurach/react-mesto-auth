@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import auth from "../../utils/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 export default function Register({
@@ -38,7 +38,7 @@ export default function Register({
           onChange={handleChange}
         />
         <input
-          type="text"
+          type="password"
           name="password"
           placeholder="Пароль"
           className="signIn__input signIn__input_type_password"
